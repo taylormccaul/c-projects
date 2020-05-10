@@ -24,6 +24,7 @@ int main(void)
     scanf("%s", category);
 
     FILE *inptr;
+    int line;
     char *word;
 
     if (strncmp(category, "Animals", 7) == 0) {
@@ -36,8 +37,7 @@ int main(void)
         fprintf(stderr, "Error. Please choose one of the categories listed.");
         return 1;
     }
-    //printf("%s\n", category);
-    //FILE *inptr = fopen("animals.txt", "r");
+
     if (inptr == NULL)
     {
         fprintf(stderr, "There was an error.\n");
@@ -45,11 +45,23 @@ int main(void)
     }
 
     char c[70];
-    for (int line = 0; line < 20; line++)
+    int rand_num = rand() % line;
+    int ch;
+    int number_of_lines = 0
+    
+    while ((ch = getc(inptr) != EOF))
+    {
+        if (ch = '\n')
+        {
+            number_of_lines++;
+        }
+    }
+    
+    for (int i = 0; i < number_of_lines; i++)
     {
         fseek(inptr, 0, SEEK_CUR);
         fgets(c, 69, inptr);
-        //printf("%s", c);
+        printf("%s\n", c);
     }
 
     fclose(inptr);
