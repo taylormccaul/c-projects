@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 
 int lines_num(FILE *file);
 
@@ -27,11 +28,11 @@ int main(void)
 
     FILE *inptr;
 
-    if (strncmp(category, "Animals", 7) == 0) {
+    if (strncmp(category, "Ani", 7) == 0) {
         inptr = fopen("animals.txt", "r");
-    } else if (strncmp(category, "Literature", 18) == 0) {
+    } else if (strncmp(category, "Lit", 18) == 0) {
         inptr = fopen("englit.txt", "r");
-    } else if (strncmp(category, "Difficult", 15) == 0) {
+    } else if (strncmp(category, "Diff", 15) == 0) {
         inptr = fopen("hardwords.txt", "r");
     } else {
         fprintf(stderr, "Error. Please choose one of the categories listed.");
@@ -46,24 +47,11 @@ int main(void)
         return 2;
     }
 
-    /*int ch;
-    int number_of_lines = 0;
+    char temp_word[80];
+    char word[50];
 
-    while (EOF != (ch=getc(inptr)))
-    {
-        if ('\n' == ch)
-        {
-            ++number_of_lines;
-        }
-    }*/
-
-    char temp_word[70];
-    char *word;
-
-    //printf("%u\n", number_of_lines);
-
+    srand(time(0));
     int rand_num = rand() % number_of_lines;
-    //printf("%i\n", rand_num);
 
     fseek(inptr, 0, SEEK_SET);
 
@@ -73,13 +61,16 @@ int main(void)
 
         if (i == rand_num)
         {
-            word = temp_word;
+            strcpy(word, temp_word);
+            break;
         }
 
         fgets(temp_word, 70, inptr);
+
     }
 
-    printf("%s\n", word);
+    printf("%s", word);
+
 
     fclose(inptr);
     return 0;
