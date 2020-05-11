@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,6 +6,8 @@
 #include <time.h>
 
 int lines_num(FILE *file);
+
+int printIndex(char *str, char *s);
 
 int main(void)
 {
@@ -70,9 +73,102 @@ int main(void)
     }
 
     printf("%s", word);
+    char guess_word[70] = "";
 
+    for (int j = 0, n = strlen(word); j < n; j++)
+    {
+        if (isalpha(word[j]))
+        {
+            strcat(guess_word, "_");
+        }
+        else
+        {
+            strcat(guess_word, " ");
+        }
+    }
 
-    fclose(inptr);
+    printf("%s\n", guess_word);
+
+    char input[2];
+    printf("Enter a letter to guess: (case-insensitive)\n");
+    scanf("%s", input);
+
+    /*char str[] = "Rebecca";
+    char key[2];
+    printf("Choose a letter: \n");
+    scanf("%s", key);*/
+    //char key[] = "a";
+    char * pch;
+    printf ("Vowels in '%s': \n", word);
+    pch = strcasestr(word, input);
+    while (pch != NULL)
+    {
+        printf ("%c " , *pch);
+        printf ("found at index %ld\n", pch-word);
+        pch = strcasestr(pch+1,input);
+    }
+
+    //printf("%s\n", word[2]);
+
+    for (int i = 0; i < strlen(word); i++)
+    {
+            if (word[i] == input[0])
+            {
+                guess_word[i] = word[i];
+                printf("%s\n", guess_word);
+            }
+    }
+    //char guess_letter[2] = input[0];
+
+    //printIndex(guess_word, &guess_letter);*/
+    //putchar(guess);
+    //printf("%c\n", guess);
+    /*char * count;
+    count=strchr(word,'a');
+    while (count!=NULL)
+    {
+        printf ("found at %ld\n",count-word+1);
+        count=strchr(word+1,'a');
+    }*/
+    /*for (int i = 0; i < strlen(word); i++)
+    {
+        printf("Found guess at %ld\n", count-word+1);
+        count = strchr(word+1, 'a');
+    }*/
+
+    //char str[] = "This is a sample string";
+    /*char * count;
+    printf ("Looking for the %c character in \"%s\"...\n", guess_letter, word);
+    count = strchr(word, guess_letter);
+    //printf("%c", (char)guess);
+    while (count != NULL)
+    {
+        //printf("%c\n", (char)guess);
+        printf ("found at %ld\n", count-word+1);
+        count = strchr(count+1, guess_letter);
+    }
+
+    vector<size_t>*/
+
+    /*for (int k = 0, o = strlen(word); k < o; k++)
+    {
+        if (isalpha(word[k]))
+        {
+            if (strcmp(guess, &word[k]) == 0)
+            {
+                guess_word[k] = word[k];
+            }
+            else {
+                continue;
+            }
+        } else {
+            printf("");
+        }
+    }*/
+
+    //printf("%s\n", guess_word);
+
+    //fclose(inptr);
     return 0;
 }
 
@@ -90,3 +186,13 @@ int lines_num(FILE *file) {
 
     return number_of_lines;
 }
+
+/*int printIndex(char *str, char *s)
+{
+    for (int i = 0; i < strlen(str); i++) {
+        if (str.substr(i, strlen(s)) == s) {
+            printf("%i\n", i);
+        }
+    }
+    return 0;
+}*/
