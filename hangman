@@ -3,12 +3,14 @@
 #include <string.h>
 #include <ctype.h>
 
+int lines_num(FILE *file);
+
 int main(void)
 {
     char *modes[3] = { "animals.txt", "englit.txt"/*, "music.txt", "science.txt"*/, "hardwords.txt" };
-    for (int i = 0, length = sizeof(modes) / 8; i < length; i++) {
+    /*for (int i = 0, length = sizeof(modes) / 8; i < length; i++) {
         printf("%s\n", modes[i]);
-    }
+    }*/
 
     /*(const char *text =
     "Hello party people \n"
@@ -18,25 +20,25 @@ int main(void)
     printf("%s\n", text);*/
 
     printf("Welcome to hangman. Choose your category: \n");
-    printf("Animals\nLiterature\nMusic\nScience\nDifficult words\n");
+    printf("Animals\nLiterature\nDifficult\n");
 
     char category[20];
     scanf("%s", category);
 
     FILE *inptr;
-    int line;
-    char *word;
 
     if (strncmp(category, "Animals", 7) == 0) {
         inptr = fopen("animals.txt", "r");
     } else if (strncmp(category, "Literature", 18) == 0) {
         inptr = fopen("englit.txt", "r");
-    } else if (strncmp(category, "Difficult words", 15) == 0) {
+    } else if (strncmp(category, "Difficult", 15) == 0) {
         inptr = fopen("hardwords.txt", "r");
     } else {
         fprintf(stderr, "Error. Please choose one of the categories listed.");
         return 1;
     }
+
+    int number_of_lines = lines_num(inptr);
 
     if (inptr == NULL)
     {
@@ -44,27 +46,56 @@ int main(void)
         return 2;
     }
 
-    char c[70];
-    int rand_num = rand() % line;
-    int ch;
-    int number_of_lines = 0
-    
-    while ((ch = getc(inptr) != EOF))
+    /*int ch;
+    int number_of_lines = 0;
+
+    while (EOF != (ch=getc(inptr)))
     {
-        if (ch = '\n')
+        if ('\n' == ch)
         {
-            number_of_lines++;
+            ++number_of_lines;
         }
-    }
-    
-    for (int i = 0; i < number_of_lines; i++)
+    }*/
+
+    char temp_word[70];
+    char *word;
+
+    //printf("%u\n", number_of_lines);
+
+    int rand_num = rand() % number_of_lines;
+    //printf("%i\n", rand_num);
+
+    fseek(inptr, 0, SEEK_SET);
+
+    for (int i = 0; i <= number_of_lines + 1; i++)
     {
         fseek(inptr, 0, SEEK_CUR);
-        fgets(c, 69, inptr);
-        printf("%s\n", c);
+
+        if (i == rand_num)
+        {
+            word = temp_word;
+        }
+
+        fgets(temp_word, 70, inptr);
     }
+
+    printf("%s\n", word);
 
     fclose(inptr);
     return 0;
-    //char *word;
+}
+
+int lines_num(FILE *file) {
+    int ch;
+    int number_of_lines = 0;
+
+    while (EOF != (ch=getc(file)))
+    {
+        if ('\n' == ch)
+        {
+            ++number_of_lines;
+        }
+    }
+
+    return number_of_lines;
 }
